@@ -1,5 +1,5 @@
 import { editGen } from "../db/local/general";
-import { createPokemon, deleteAllPokemon } from "../db/local/pokemon";
+import { createPokemon, deleteAllPokemon, isDuplicate } from "../db/local/pokemon";
 import { capsFirst } from "./capFirstLetter";
 
 export function updateLocalPokemon() {
@@ -12,17 +12,27 @@ export function updateLocalPokemon() {
         .then((data) => {
             data.results.forEach((pokemon) => {
                 let currPokemon = { name: capsFirst(pokemon.name)}
-                getPokemonDetails(pokemon.url).then((specDet) => {
-                    currPokemon = {
-                        ...currPokemon, 
-                        abilities: specDet.abilities,
-                        moves: specDet.moves, 
-                        small_sprite: specDet.small_sprite, 
-                        main_sprite: specDet.main_sprite    
-                    }
 
-                    createPokemon(currPokemon)
-                })
+                //make sure there are no duplicate pokemons with the same name
+                if(isDuplicate(currPokemon.name) === false){
+                    
+                    //retrieve the pokemon specific details
+                    getPokemonDetails(pokemon.url).then((specDet) => {
+                        currPokemon = {
+                            ...currPokemon, 
+                            abilities: specDet.abilities,
+                            moves: specDet.moves, 
+                            small_sprite: specDet.small_sprite, 
+                            main_sprite: specDet.main_sprite,
+                            base_experience: specDet.base_experience,
+                            height: specDet.height,
+                            weight: specDet.weight   
+                        }
+    
+                        createPokemon(currPokemon)
+                    })
+                }
+               
       
 
             });
@@ -48,11 +58,16 @@ function getPokemonDetails(url){
                 moves.push(capsFirst(element.move.name))
             })
 
+
             let processedObj = {
                                 abilities: abilities, 
                                 moves: moves, 
                                 small_sprite: data.sprites.front_default, 
-                                main_sprite: data.sprites.other.home.front_default
+                                main_sprite: data.sprites.other.home.front_default,
+                                base_experience: data.base_experience.toString(),
+                                height: data.height.toString(),
+                                weight: data.weight.toString()
+
                             }
 
 

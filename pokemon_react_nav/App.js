@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native"
 
 //screens
 import HomeScreen from './src/screens/home';
+import DetailsScreen from './src/screens/details';
 
 //local db imports
 import { createGen, getGen } from './src/db/local/general';
@@ -15,7 +16,6 @@ import { createGen, getGen } from './src/db/local/general';
 //functions/services
 import { within24Hours } from './src/functions/within24Hours';
 import { updateLocalPokemon } from './src/functions/updateLocalPokemon';
-
 
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
@@ -28,7 +28,10 @@ StatusBar.setBarStyle('light-content', true);
 
 
 const checkRunDailyUpd = () => {
+  //retieve the general record from the local database
   const genRecs = getGen()[0]
+  
+  //if a record exist - i.e. not the first run
   if(genRecs > 0) {
     const lastUpdDt = genRecs[0].pokeLastUpdDt
 
@@ -36,6 +39,7 @@ const checkRunDailyUpd = () => {
     if(within24Hours(lastUpdDt) === false){
       updateLocalPokemon()
     }
+    
   //otherwiswe, create a general record and update the local pokemon table
   } else {
     createGen()
@@ -64,22 +68,22 @@ export default class App extends Component {
             <Stack.Screen name="Home"
               component={HomeScreen}
               options={{
-                headerShown: false,
+                headerShown: true,
                 gestureEnabled: false,
                 presentation: 'card',
                 animation: 'slide_from_right',
                 animationTypeForReplace: 'push'
               }} />
 
-            {/* <Stack.Screen name="Signup"
-              component={SignupScreen}
+            <Stack.Screen name="Details"
+              component={DetailsScreen}
               options={{
-                headerShown: false,
+                headerShown: true,
                 gestureEnabled: false,
                 presentation: 'card',
                 animation: 'slide_from_right',
                 animationTypeForReplace: 'push'
-              }} /> */}
+              }} />
 
           </Stack.Navigator>
         </NavigationContainer>

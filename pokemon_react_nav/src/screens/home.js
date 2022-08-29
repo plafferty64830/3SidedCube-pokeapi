@@ -1,8 +1,9 @@
 //generic react-native import for frontend and navigation
 import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet, View, Text, StatusBar, Dimensions, SafeAreaView } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, StatusBar, Dimensions, SafeAreaView, ScrollView } from 'react-native';
 
 //components
+import PokemonList from '../components/pokemonList';
 
 
 const width = Dimensions.get('window').width
@@ -11,33 +12,20 @@ const height = Dimensions.get('window').height
 
 const HomeScreen = ({ navigation, route }) => {
 
-  const [updComplete, setComplete] = useState(false)
-
-  //onload
-  if (updComplete === false) {
-
-   //stuff to do on load
-
-   setComplete(true)
-  }
-
-
   StatusBar.setBarStyle('dark-content', true);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView>
         <View style={styles.mainView}>
 
           <View style={styles.content}>
 
-
-            <TouchableOpacity onPress={() => { finished() }} style={styles.blackButton}>
-              <Text style={styles.blackBtnText}>I'm finished for now</Text>
-            </TouchableOpacity>
+            <PokemonList nav={navigation}/>
           </View>
 
         </View>
-
+      </ScrollView>
     </SafeAreaView>
 
 
