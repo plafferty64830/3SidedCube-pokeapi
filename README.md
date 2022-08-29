@@ -3,7 +3,7 @@
 ## Projects
 
 #### Pokemon
-- An incompleted attempt at the project utilising the react native native navigation library from WIX and Redux for persisting data.
+- An incompleted attempt at the project utilising the react native native navigation library from WIX. Unfortunately as the redux documentation appeared to be under contruction I didn't quite manage to include this in the soltion. Instead, I have utilised Realm from MongoDB.
  
 #### Pokemon_react_nav
 - A completed project utilising react-navigation and Realm as the local database from MongoDB for persisting data.
@@ -30,6 +30,6 @@ If this is not the case, a development environment can be setup using the follow
  9. Assuming you now have a response from ***adb devices*** run ***npx react-native run-android***. This command may differ slightly depending on your development environment.
 
 
-## Demo Videos
+## Demo Video
 
 - ***Pokemon_react_nav*** - https://drive.google.com/file/d/1nd9sKPZ-TgFqvqwSgl37LUrlUGFN25xU/view?usp=sharing 
